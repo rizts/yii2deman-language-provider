@@ -81,8 +81,8 @@ class DbLanguageProvider implements LanguageProviderInterface
 
             foreach ($languages as $language) {
                 $this->_languages[] = [
-                    'locale' => $language->{$this->localeField},
-                    'label' => $language->{$this->labelField}
+                    'locale' => $language[$this->localeField],
+                    'label' => $language[$this->labelField]
                 ];
             }
         }
@@ -103,7 +103,7 @@ class DbLanguageProvider implements LanguageProviderInterface
                 ->one($this->db);
 
             $this->_defaultLanguage = ($language !== null)
-                ? ['locale' => $language->{$this->localeField}, 'label' => $language->{$this->labelField}]
+                ? ['locale' => $language[$this->localeField], 'label' => $language[$this->labelField]]
                 : [];
         }
 
@@ -117,8 +117,8 @@ class DbLanguageProvider implements LanguageProviderInterface
     {
         $languages = $this->getDefaultLanguage();
         foreach ($languages as $language) {
-            if ($language['locale'] == $locale) {
-                return $languages['label'];
+            if ($language == $locale) {
+                return $language;
             }
         }
 
